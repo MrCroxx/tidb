@@ -53,11 +53,11 @@ func Register(name string, driver kv.Driver) error {
 //    boltdb:///absolute/path
 //
 // The engine should be registered before creating storage.
-func New(path string) (kv.Storage, error) {
-	return newStoreWithRetry(path, util.DefaultMaxRetries)
+func New(path string, tenantID uint64) (kv.Storage, error) {
+	return newStoreWithRetry(path, util.DefaultMaxRetries, tenantID)
 }
 
-func newStoreWithRetry(path string, maxRetries int) (kv.Storage, error) {
+func newStoreWithRetry(path string, maxRetries int, tenantID uint64) (kv.Storage, error) {
 	storeURL, err := url.Parse(path)
 	if err != nil {
 		return nil, err
@@ -72,7 +72,7 @@ func newStoreWithRetry(path string, maxRetries int) (kv.Storage, error) {
 	var s kv.Storage
 	err = util.RunWithRetry(maxRetries, util.RetryInterval, func() (bool, error) {
 		logutil.BgLogger().Info("new store", zap.String("path", path))
-		s, err = d.Open(path)
+		s, err = d.OpenWithTenantID(path, tenantID)
 		return kv.IsTxnRetryableError(err), err
 	})
 

@@ -49,11 +49,49 @@ func (d MockTiKVDriver) Open(path string) (kv.Storage, error) {
 	return NewMockStore(opts...)
 }
 
+// Open creates a MockTiKV storage.
+func (d MockTiKVDriver) OpenWithTenantID(path string, _ uint64) (kv.Storage, error) {
+	u, err := url.Parse(path)
+	if err != nil {
+		return nil, errors.Trace(err)
+	}
+	if !strings.EqualFold(u.Scheme, "mocktikv") {
+		return nil, errors.Errorf("Uri scheme expected(mocktikv) but found (%s)", u.Scheme)
+	}
+
+	opts := []MockTiKVStoreOption{WithPath(u.Path), WithStoreType(MockTiKV)}
+	txnLocalLatches := config.GetGlobalConfig().TxnLocalLatches
+	if txnLocalLatches.Enabled {
+		opts = append(opts, WithTxnLocalLatches(txnLocalLatches.Capacity))
+	}
+
+	return NewMockStore(opts...)
+}
+
 // EmbedUnistoreDriver is in embedded unistore driver.
 type EmbedUnistoreDriver struct{}
 
 // Open creates a EmbedUnistore storage.
 func (d EmbedUnistoreDriver) Open(path string) (kv.Storage, error) {
+	u, err := url.Parse(path)
+	if err != nil {
+		return nil, errors.Trace(err)
+	}
+	if !strings.EqualFold(u.Scheme, "unistore") {
+		return nil, errors.Errorf("Uri scheme expected(unistore) but found (%s)", u.Scheme)
+	}
+
+	opts := []MockTiKVStoreOption{WithPath(u.Path), WithStoreType(EmbedUnistore)}
+	txnLocalLatches := config.GetGlobalConfig().TxnLocalLatches
+	if txnLocalLatches.Enabled {
+		opts = append(opts, WithTxnLocalLatches(txnLocalLatches.Capacity))
+	}
+
+	return NewMockStore(opts...)
+}
+
+// Open creates a EmbedUnistore storage.
+func (d EmbedUnistoreDriver) OpenWithTenantID(path string, _ uint64) (kv.Storage, error) {
 	u, err := url.Parse(path)
 	if err != nil {
 		return nil, errors.Trace(err)

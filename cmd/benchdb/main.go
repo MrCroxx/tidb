@@ -93,7 +93,7 @@ type benchDB struct {
 
 func newBenchDB() *benchDB {
 	// Create TiKV store and disable GC as we will trigger GC manually.
-	store, err := store.New("tikv://" + *addr + "?disableGC=true")
+	store, err := store.New("tikv://"+*addr+"?disableGC=true", 0)
 	terror.MustNil(err)
 	_, err = session.BootstrapSession(store)
 	terror.MustNil(err)

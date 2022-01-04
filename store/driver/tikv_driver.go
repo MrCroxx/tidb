@@ -65,6 +65,12 @@ func WithSecurity(s config.Security) Option {
 	}
 }
 
+func WithTenantID(tenantID uint64) Option {
+	return func(c *TiKVDriver) {
+		c.tenantID = tenantID
+	}
+}
+
 // WithTiKVClientConfig changes the config.TiKVClient used by tikv driver.
 func WithTiKVClientConfig(client config.TiKVClient) Option {
 	return func(c *TiKVDriver) {
@@ -88,6 +94,7 @@ func WithPDClientConfig(client config.PDClient) Option {
 
 // TiKVDriver implements engine TiKV.
 type TiKVDriver struct {
+	tenantID        uint64
 	pdConfig        config.PDClient
 	security        config.Security
 	tikvConfig      config.TiKVClient
@@ -98,6 +105,10 @@ type TiKVDriver struct {
 // Path example: tikv://etcd-node1:port,etcd-node2:port?cluster=1&disableGC=false
 func (d TiKVDriver) Open(path string) (kv.Storage, error) {
 	return d.OpenWithOptions(path)
+}
+
+func (d TiKVDriver) OpenWithTenantID(path string, tenantID uint64) (kv.Storage, error) {
+	return d.OpenWithOptions(path, WithTenantID(tenantID))
 }
 
 func (d *TiKVDriver) setDefaultAndOptions(options ...Option) {
@@ -158,7 +169,7 @@ func (d TiKVDriver) OpenWithOptions(path string, options ...Option) (kv.Storage,
 	}
 
 	pdClient := tikv.CodecPDClient{Client: pdCli}
-	s, err := tikv.NewKVStore(uuid, &pdClient, spkv, tikv.NewRPCClient(tikv.WithSecurity(d.security)))
+	s, err := tikv.NewKVStore(uuid, &pdClient, spkv, tikv.NewRPCClient(tikv.WithSecurity(d.security), tikv.WithTenantID(d.tenantID)))
 	if err != nil {
 		return nil, errors.Trace(err)
 	}

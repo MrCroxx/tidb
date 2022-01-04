@@ -402,6 +402,7 @@ type Driver interface {
 	// Open returns a new Storage.
 	// The path is the string for storage specific format.
 	Open(path string) (Storage, error)
+	OpenWithTenantID(path string, tenantID uint64) (Storage, error)
 }
 
 // Storage defines the interface for storage.

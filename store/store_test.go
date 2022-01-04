@@ -41,6 +41,10 @@ func (s *brokenStore) Open(_ string) (kv.Storage, error) {
 	return nil, kv.ErrTxnRetryable
 }
 
+func (s *brokenStore) OpenWithTenantID(_ string, _ uint64) (kv.Storage, error) {
+	return nil, kv.ErrTxnRetryable
+}
+
 func insertData(t *testing.T, txn kv.Transaction) {
 	for i := startIndex; i < testCount; i++ {
 		val := encodeInt(i * indexStep)
@@ -135,7 +139,7 @@ func mustGet(t *testing.T, txn kv.Transaction) {
 }
 
 func TestNew(t *testing.T) {
-	store, err := New("goleveldb://relative/path")
+	store, err := New("goleveldb://relative/path", 0)
 	require.Error(t, err)
 	require.Nil(t, store)
 }
@@ -737,7 +741,7 @@ func TestIsolationMultiInc(t *testing.T) {
 func TestRetryOpenStore(t *testing.T) {
 	begin := time.Now()
 	require.NoError(t, Register("dummy", &brokenStore{}))
-	store, err := newStoreWithRetry("dummy://dummy-store", 3)
+	store, err := newStoreWithRetry("dummy://dummy-store", 3, 0)
 	if store != nil {
 		defer func() {
 			require.NoError(t, store.Close())
@@ -750,7 +754,7 @@ func TestRetryOpenStore(t *testing.T) {
 
 func TestOpenStore(t *testing.T) {
 	require.NoError(t, Register("open", &brokenStore{}))
-	store, err := newStoreWithRetry(":", 3)
+	store, err := newStoreWithRetry(":", 3, 0)
 	if store != nil {
 		defer func() {
 			require.NoError(t, store.Close())

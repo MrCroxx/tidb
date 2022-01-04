@@ -290,7 +290,7 @@ func createStoreAndDomain() (kv.Storage, *domain.Domain) {
 	cfg := config.GetGlobalConfig()
 	fullPath := fmt.Sprintf("%s://%s", cfg.Store, cfg.Path)
 	var err error
-	storage, err := kvstore.New(fullPath)
+	storage, err := kvstore.New(fullPath, cfg.TenantID)
 	terror.MustNil(err)
 	// Bootstrap a session to load information schema.
 	dom, err := session.BootstrapSession(storage)
