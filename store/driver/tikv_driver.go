@@ -65,7 +65,7 @@ func WithSecurity(s config.Security) Option {
 	}
 }
 
-func WithTenantID(tenantID uint64) Option {
+func WithTenantID(tenantID uint32) Option {
 	return func(c *TiKVDriver) {
 		c.tenantID = tenantID
 	}
@@ -94,7 +94,7 @@ func WithPDClientConfig(client config.PDClient) Option {
 
 // TiKVDriver implements engine TiKV.
 type TiKVDriver struct {
-	tenantID        uint64
+	tenantID        uint32
 	pdConfig        config.PDClient
 	security        config.Security
 	tikvConfig      config.TiKVClient
@@ -107,7 +107,7 @@ func (d TiKVDriver) Open(path string) (kv.Storage, error) {
 	return d.OpenWithOptions(path)
 }
 
-func (d TiKVDriver) OpenWithTenantID(path string, tenantID uint64) (kv.Storage, error) {
+func (d TiKVDriver) OpenWithTenantID(path string, tenantID uint32) (kv.Storage, error) {
 	return d.OpenWithOptions(path, WithTenantID(tenantID))
 }
 

@@ -524,8 +524,8 @@ github.com/modocache/gover v0.0.0-20171022184752-b58185e213c5/go.mod h1:caMODM3P
 github.com/montanaflynn/stats v0.5.0 h1:2EkzeTSqBB4V4bJwWrt5gIIrZmpJBcoIRGS2kWLgzmk=
 github.com/montanaflynn/stats v0.5.0/go.mod h1:wL8QJuTMNUDYhXwkmfOly8iTdp5TEcJFWZD2D7SIkUc=
 github.com/moul/http2curl v1.0.0/go.mod h1:8UbvGypXm98wA/IqH45anm5Y2Z6ep6O31QGOAZ3H0fQ=
-github.com/mrcroxx/client-go/v2 v2.0.0-rc.0.20220104015647-b1bb2bc4b9b3 h1:q7dN2h4VDPvc1xRJslpYouqguN/MJolDf0HYs5q81Kw=
-github.com/mrcroxx/client-go/v2 v2.0.0-rc.0.20220104015647-b1bb2bc4b9b3/go.mod h1:RjjisKFBHHAEW+O7W7Oi9zjI3eWG9duQ3Huv200JlZk=
+github.com/mrcroxx/client-go/v2 v2.0.0-rc.0.20220106152014-cae2ee4a2945 h1:SwFDGw8e+uHVnRJDYGRWiMGK5MxNhuQia+ubd4KxrBo=
+github.com/mrcroxx/client-go/v2 v2.0.0-rc.0.20220106152014-cae2ee4a2945/go.mod h1:RgNV94H95/B9wXh9PaO6JcIVHLSNXhQPjVdXXFgceCE=
 github.com/mwitkow/go-conntrack v0.0.0-20161129095857-cc309e4a2223/go.mod h1:qRWi+5nqEBWmkhHvq77mSJWrCKwh8bxhgT7d/eI7P4U=
 github.com/nats-io/nats.go v1.8.1/go.mod h1:BrFz9vVn0fU3AcH9Vn4Kd7W0NpJ651tD5omQ3M8LwxM=
 github.com/nats-io/nkeys v0.0.2/go.mod h1:dab7URMsZm6Z/jp9Z5UGa87Uutgc2mVpXLC4B7TDb/4=
