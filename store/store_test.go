@@ -41,7 +41,7 @@ func (s *brokenStore) Open(_ string) (kv.Storage, error) {
 	return nil, kv.ErrTxnRetryable
 }
 
-func (s *brokenStore) OpenWithTenantID(_ string, _ uint64) (kv.Storage, error) {
+func (s *brokenStore) OpenWithTenantID(_ string, _ uint32) (kv.Storage, error) {
 	return nil, kv.ErrTxnRetryable
 }
 

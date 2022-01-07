@@ -50,7 +50,7 @@ func (d MockTiKVDriver) Open(path string) (kv.Storage, error) {
 }
 
 // Open creates a MockTiKV storage.
-func (d MockTiKVDriver) OpenWithTenantID(path string, _ uint64) (kv.Storage, error) {
+func (d MockTiKVDriver) OpenWithTenantID(path string, _ uint32) (kv.Storage, error) {
 	u, err := url.Parse(path)
 	if err != nil {
 		return nil, errors.Trace(err)
@@ -91,7 +91,7 @@ func (d EmbedUnistoreDriver) Open(path string) (kv.Storage, error) {
 }
 
 // Open creates a EmbedUnistore storage.
-func (d EmbedUnistoreDriver) OpenWithTenantID(path string, _ uint64) (kv.Storage, error) {
+func (d EmbedUnistoreDriver) OpenWithTenantID(path string, _ uint32) (kv.Storage, error) {
 	u, err := url.Parse(path)
 	if err != nil {
 		return nil, errors.Trace(err)

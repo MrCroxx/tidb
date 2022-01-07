@@ -92,7 +92,7 @@ var (
 
 // Config contains configuration options.
 type Config struct {
-	TenantID         uint64 `toml:"tenant-id" json:"tenant-id"`
+	TenantID         uint32 `toml:"tenant-id" json:"tenant-id"`
 	Host             string `toml:"host" json:"host"`
 	AdvertiseAddress string `toml:"advertise-address" json:"advertise-address"`
 	Port             uint   `toml:"port" json:"port"`

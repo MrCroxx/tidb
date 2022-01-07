@@ -53,6 +53,18 @@ func (c *pdClient) GetLocalTSAsync(ctx context.Context, dcLocation string) pd.TS
 	return &mockTSFuture{c, ctx, false}
 }
 
+func (c *pdClient) WatchGlobalConfig(ctx context.Context) (chan []pd.GlobalConfigItem, error) {
+	return nil, nil
+}
+
+func (c *pdClient) StoreGlobalConfig(ctx context.Context, items []pd.GlobalConfigItem) error {
+	return nil
+}
+
+func (c *pdClient) LoadGlobalConfig(ctx context.Context, names []string) ([]pd.GlobalConfigItem, error) {
+	return nil, nil
+}
+
 type mockTSFuture struct {
 	pdc  *pdClient
 	ctx  context.Context
