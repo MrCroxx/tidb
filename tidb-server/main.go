@@ -106,6 +106,7 @@ const (
 	nmRepairMode             = "repair-mode"
 	nmRepairList             = "repair-list"
 	nmRequireSecureTransport = "require-secure-transport"
+	nmTenantId               = "tenant-id"
 
 	nmProxyProtocolNetworks      = "proxy-protocol-networks"
 	nmProxyProtocolHeaderTimeout = "proxy-protocol-header-timeout"
@@ -139,6 +140,7 @@ var (
 	repairMode       = flagBoolean(nmRepairMode, false, "enable admin repair mode")
 	repairList       = flag.String(nmRepairList, "", "admin repair table list")
 	requireTLS       = flag.Bool(nmRequireSecureTransport, false, "require client use secure transport")
+	tenantId         = flag.Uint(nmTenantId, 0, "tenant id")
 
 	// Log
 	logLevel     = flag.String(nmLogLevel, "info", "log level: info, debug, warn, error, fatal")
@@ -466,6 +468,9 @@ func overrideConfig(cfg *config.Config) {
 		if cfg.RepairMode {
 			cfg.RepairTableList = stringToList(*repairList)
 		}
+	}
+	if actualFlags[nmTenantId] {
+		cfg.TenantID = uint32(*tenantId)
 	}
 
 	// Log

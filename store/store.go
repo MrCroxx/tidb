@@ -71,7 +71,7 @@ func newStoreWithRetry(path string, maxRetries int, tenantID uint32) (kv.Storage
 
 	var s kv.Storage
 	err = util.RunWithRetry(maxRetries, util.RetryInterval, func() (bool, error) {
-		logutil.BgLogger().Info("new store", zap.String("path", path))
+		logutil.BgLogger().Info("new store", zap.String("path", path), zap.Uint32("tenantID", tenantID))
 		s, err = d.OpenWithTenantID(path, tenantID)
 		return kv.IsTxnRetryableError(err), err
 	})
